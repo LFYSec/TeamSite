@@ -1,0 +1,72 @@
+<div class="page-container">
+
+        <div class="main-content">
+            <div class="container-fluid">
+    
+                <div class="breadcrumb-wrapper row">
+                    <div class="col-12 col-lg-3 col-md-6">
+                        <h4 class="page-title">团队成员</h4>
+                    </div>
+                    <div class="col-12 col-lg-9 col-md-6">
+                        <ol class="breadcrumb float-right">
+                            <li><a href="/admin/main/index">返回首页</a></li>
+                        </ol>
+                    </div>
+                </div>
+    
+            </div>
+            <div class="container-fluid">
+                    <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">成员列表</h4>
+                                    </div>
+                                    <div class="table-overflow">
+                                        <table class="table table-lg" style="table-layout: fixed;">
+                                            <thead>
+                                                <tr>
+                                                    <td class="text-dark text-semibold">姓名</td>
+                                                    <td class="text-dark text-semibold">学院</td>
+                                                    <td class="text-dark text-semibold">专业</td>
+                                                    <td class="text-dark text-semibold">学号</td>
+                                                    <td class="text-dark text-semibold">身份证号</td>
+                                                    <td class="text-dark text-semibold">银行卡号</td>
+                                                    <th class="text-dark text-semibold">Email</td>
+                                                    <th class="text-dark text-semibold">手机号</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <{foreach $memberlist as $v}>
+                                                <tr>
+                                                    <!--<td style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title=""></td>
+                                                    -->
+                                                    <td><{$v.Name}></td>
+                                                    <td><{$v.College}></td>
+                                                    <td><{$v.Major}></td>
+                                                    <td><{$v.StudentNumber}></td>
+                                                    <td><{$v.PinCode}></td>
+                                                    <td><{$v.CreditCard}></td>
+                                                    <td><{$v.Email}></td>
+                                                    <td><{$v.PhoneNumber}></td>
+                                                </tr>
+                                                <{/foreach}>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+        </div>
+    
+    
+        <footer class="content-footer">
+            <div class="footer">
+                <div class="copyright" style="text-align: center;">
+                    <span>Copyright © 2003-2019 V5++, All Right Reserved</span>
+                </div>
+            </div>
+        </footer>
+    
+    </div>

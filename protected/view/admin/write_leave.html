@@ -1,0 +1,97 @@
+<link href="../../i/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+<link href="../../i/css/base.css" type="text/css" rel="stylesheet">
+<link href="../../i/css/tempusdominus-bootstrap-4.css" type="text/css" rel="stylesheet">
+
+<script src="../../i/js/jquery-min.js"></script>
+<script src="../../i/js/moment-with-locales.min.js"></script>
+<script src="../../i/js/moment-timezone-with-data-2012-2022.min.js"></script>
+<script src="../../i/js/base.js"></script>
+<script src="../../i/js/tempusdominus-bootstrap-4.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker').datetimepicker({
+            format: 'L'
+        });
+    });
+</script>
+
+<div class="page-container">
+
+        <div class="main-content">
+            
+            <div class="container-fluid">
+    
+                <div class="breadcrumb-wrapper row">
+                    <div class="col-12 col-lg-3 col-md-6">
+                        <h4 class="page-title">请假记录</h4>
+                    </div>
+                    <div class="col-12 col-lg-9 col-md-6">
+                        <ol class="breadcrumb float-right">
+                            <li><a href="/admin/main/index">返回首页</a></li>
+                        </ol>
+                    </div>
+                </div>
+    
+            </div>
+    
+            <div class="container-fluid">
+                
+                <div class="card">
+                    <div class="card-header border-bottom">
+                        <h4 class="card-title">记请假</h4>
+                    </div>
+                    <div class="card-body">
+                        <form class="forms-sample" method="POST">
+
+                            <div class="form-group">
+                                <label>请假人</label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>请假原因</label>
+                                <input type="text" class="form-control" name="reason" required>
+                            </div>
+                            <div class="form-group">
+                                <label>请假时长(_个工作时间)</label>
+                                <input type="text" class="form-control" name="duration" placeholder="请输入数字" required pattern="^\d{0,5}$">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">离开日期</label>
+                                <input type="text" class="form-control datetimepicker-input" id="datetimepicker" data-toggle="datetimepicker" data-target="#datetimepicker" name="date" required/>
+                            </div>
+    
+                            <div class="form-group">
+                                <div class="custom-control custom-radio radio custom-control-inline">
+                                    <input type="radio" class="custom-control-input" name="kind" id="1" checked="checked" value="事假">
+                                    <label class="custom-control-label" for="1">事假</label>
+                                </div>
+                                <div class="custom-control custom-radio radio custom-control-inline">
+                                    <input type="radio" class="custom-control-input" name="kind" id="2" value="上课">
+                                    <label class="custom-control-label" for="2">上课</label>
+                                </div>
+                                <div class="custom-control custom-radio radio custom-control-inline">
+                                    <input type="radio" class="custom-control-input" name="kind" id="3" value="其他">
+                                    <label class="custom-control-label" for="3">其他</label>
+                                </div>
+                            </div>
+                        
+                            <button type="submit" class="btn btn-common mr-3">提交</button>
+                        </form>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    
+    
+        <footer class="content-footer">
+            <div class="footer">
+                <div class="copyright" style="text-align: center;">
+                    <span>Copyright © 2003-2019 V5++, All Right Reserved</span>
+                </div>
+            </div>
+        </footer>
+    
+    </div>

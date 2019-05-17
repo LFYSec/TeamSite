@@ -1,0 +1,302 @@
+<div class="page-container">
+
+    <div class="main-content">
+        <div class="container-fluid">
+
+            <div class="breadcrumb-wrapper row">
+                <div class="col-12 col-lg-3 col-md-6">
+                    <h4 class="page-title">任务中心</h4>
+                </div>
+                <div class="col-12 col-lg-9 col-md-6">
+                    <ol class="breadcrumb float-right">
+                        <li><a href="/admin/main/index">返回首页</a></li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="float-left">
+                                <h4 class="card-title">我的任务</h4>
+                            </div>
+                            <div class="float-left" style="padding-left: 15px;padding-top: 2px;">
+                                <h5 style="margin:0px"><a href="/admin/task/release">[发布任务]</a></h5>
+                            </div>
+                            <div class="selected float-right">
+                                <select class="custom-select">
+                                    <option selected="selected" value="0">Monthly</option>
+                                    <option value="1">Daily</option>
+                                    <option value="2">Weekly</option>
+                                    <option value="3">Yearly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-overflow">
+                            <table class="table table-lg">
+                                <thead>
+                                    <tr>
+                                        <td class="text-dark text-semibold"><strong>ID</strong></td>
+                                        <td class="text-dark text-semibold"><strong>发布人</strong></td>
+                                        <td class="text-dark text-semibold"><strong>开始日期</strong></td>
+                                        <td class="text-dark text-semibold"><strong>截止日期</strong></td>
+                                        <td class="text-dark text-semibold"><strong>任务信息</strong></td>
+                                        <td class="text-dark text-semibold"><strong>任务树</strong></td>
+                                        <th class="text-dark text-semibold"><strong>具体操作</strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <{foreach $taskDoing as $v}>
+                                    <tr>
+                                        <td><{$v.TaskID}></td>
+                                        <td><{$v.AdministratorName}></td>
+                                        <td><{$v.ReleaseTime}></td>
+                                        <td><{$v.Deadline}></td>
+                                        <{$length = mb_strlen($v.TaskInformation,"UTF-8")}>
+                                        <{if $length<=10}>
+                                            <td><{$v.TaskInformation}></td>
+                                        <{else}>
+                                            <td title="<{$v.TaskInformation}>"><{mb_substr($v.TaskInformation,0,11,"UTF-8")}>...</td>
+                                        <{/if}>
+                                        <td onclick="window.location.href='/admin/task/tree?sid=<{$v.TaskID}>'"><button class="btn btn-link" style="color:#17a2b8">查看</button></td>
+                                        <td>
+                                            
+                                            <script>
+                                                function formSubmit(elementValue,url) {
+
+                                                    var turnForm = document.createElement("form");   
+                                                    document.body.appendChild(turnForm);
+                                                    turnForm.method = 'post';
+                                                    turnForm.action = url;
+                                                    
+                                                    var newElement = document.createElement("input");
+                                                    newElement.setAttribute("name","taskid");
+                                                    newElement.setAttribute("type","hidden");
+                                                    newElement.setAttribute("value",elementValue);
+                                                    turnForm.appendChild(newElement);
+
+                                                    turnForm.submit();
+                                                }
+                                            </script>
+                                        <{if $v.isEnd == 0}>
+                                            <button class="btn btn-outline-info btn-rounded" onclick=formSubmit("<{$v.TaskID}>","/admin/task/schedule");>进度提交</button>
+                                            <button class="btn btn-outline-info btn-rounded" onclick=formSubmit("<{$v.TaskID}>","/admin/doc/submit");>文档提交</button>
+                                            <button class="btn btn-outline-info btn-rounded" onclick=formSubmit("<{$v.TaskID}>","/admin/task/distrib");>任务分发</button>
+                                        <{else}>
+                                            已完成
+                                        <{/if}>
+                                        </td>
+                                    </tr>
+                                    <{/foreach}>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">我发布的任务</h4>
+                            <div class="selected float-right">
+                                <select class="custom-select">
+                                    <option selected="selected" value="0">Monthly</option>
+                                    <option value="1">Daily</option>
+                                    <option value="2">Weekly</option>
+                                    <option value="3">Yearly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-overflow">
+                            <table class="table table-lg">
+                                <thead>
+                                    <tr>
+                                        <td class="text-dark text-semibold"><strong>父任务</strong></td>
+                                        <td class="text-dark text-semibold"><strong>接收者</strong></td>
+                                        <td class="text-dark text-semibold"><strong>发布日期</strong></td>
+                                        <td class="text-dark text-semibold"><strong>截止日期</strong></td>
+                                        <td class="text-dark text-semibold"><strong>任务信息</strong></td>
+                                        <td class="text-dark text-semibold"><strong>当前进度</strong></td>
+                                        <th class="text-dark text-semibold"><strong>是否完成</strong></td>
+                                        <th class="text-dark text-semibold"><strong>操作</strong></td>
+                                        <th class="text-dark text-semibold"><strong>文档数</strong></td>
+                                        <th class="text-dark text-semibold"><strong>文档状态</strong></td>
+                                        <th class="text-dark text-semibold"><strong>查看</strong></td>
+                                    </tr>
+                                </thead>
+                                <script>
+                                        function countTheDoc(){
+                                            var num;
+
+                                            $.get("/api/countdoc",function(data){
+                                                var tmp = JSON.parse(data);
+
+                                                for(var k in tmp){
+                                                    try{
+                                                        var node = "countdoc"+k;
+                                                        console.log(node);
+                                                        document.getElementById(node).innerHTML=tmp[k];
+                                                    }catch(err){
+                                                        console.log(k);
+                                                    }
+                                                    
+                                                }
+                                            });
+                                        }
+
+                                        function comleteTask(tid){
+                                            var r=confirm("确定将任务设置为完成？");
+                                            if (r==true){
+                                                $.post("/admin/task/done",{id:tid});
+                                                window.location.reload();
+                                            }
+                                        }
+                                        /*
+                                        function docTree(tid){
+                                            var turnForm = document.createElement("form");   
+                                            document.body.appendChild(turnForm);
+                                            turnForm.method = 'post';
+                                            turnForm.action = "/admin/task/tree";
+                                            
+                                            var newElement = document.createElement("input");
+                                            newElement.setAttribute("name","sid");
+                                            newElement.setAttribute("type","hidden");
+                                            newElement.setAttribute("value",tid);
+                                            turnForm.appendChild(newElement);
+
+                                            turnForm.submit();
+                                        }
+                                        */
+
+                                        function taskDel(tid){
+                                            var httpRequest = new XMLHttpRequest();
+                                            var r=confirm("撤销后任务将被删除，确认撤销？");
+                                            if (r==true){
+                                                $.post("/admin/task/cancel",{id:tid});
+                                                window.location.reload();
+                                            }
+                                        }
+                                </script>
+                                <tbody>
+                                    <{foreach $myTask as $v}>
+                                    <tr>
+                                        <{if $v.TaskID !== $v.SuperiorID}>
+                                            <td><{$v.SuperiorID}></td>
+                                        <{else}>
+                                            <td>无</td>
+                                        <{/if}>
+                                        <td><{$v.Name}></td>
+                                        <td><{substr($v.ReleaseTime,2,10)}></td>
+                                        <td><{substr($v.Deadline,2,10)}></td>
+
+                                        <{$length = mb_strlen($v.TaskInformation,"UTF-8")}>
+                                        <{if $length<=6}>
+                                            <td><{$v.TaskInformation}></td>
+                                        <{else}>
+                                            <td title="<{$v.TaskInformation}>"><{mb_substr($v.TaskInformation,0,8,"UTF-8")}>...</td>
+                                        <{/if}>
+
+                                        <{$length = mb_strlen($v.TaskProgress,"UTF-8")}>
+                                        <{if $length<=7}>
+                                            <td><{$v.TaskProgress}></td>
+                                        <{else}>
+                                            <td title="<{$v.TaskProgress}>"><{mb_substr($v.TaskProgress,0,9,"UTF-8")}>...</td>
+                                        <{/if}>
+                                        
+                                        <{if $v.isEnd == 0}>
+                                            <td onclick=comleteTask(<{$v.TaskID}>);><button class="btn btn-link" style="color:#17a2b8">未完成</button></td>
+                                        <{else}>
+                                            <td style="padding-left:27px">已完成</td>
+                                        <{/if}>
+
+                                        <td onclick=taskDel(<{$v.TaskID}>);><button class="btn btn-link" style="color:#17a2b8">撤销</button></td>
+
+                                        <td style="text-align:center" id="countdoc<{$v.TaskID}>">0</td>
+
+                                        <{if $v.isNew == 1}>
+                                            <td>有更新</td>
+                                        <{else}>
+                                            <td>已查看</td>
+                                        <{/if}>
+
+                                        <td>
+                                            <button class="btn btn-outline-info btn-rounded" onclick="window.location.href='/admin/main/doc?id=<{$v.TaskID}>'">文档</button>
+                                            <button class="btn btn-outline-info btn-rounded" onclick="window.location.href='/admin/task/tree?sid=<{$v.TaskID}>'">任务树</button>
+                                        </td>
+                                    </tr>
+
+                                    <{/foreach}>
+                                    <script>
+                                        countTheDoc();
+                                    </script>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">我的文档</h4>
+                            <div class="selected float-right">
+                                <select class="custom-select">
+                                    <option selected="selected" value="0">Monthly</option>
+                                    <option value="1">Daily</option>
+                                    <option value="2">Weekly</option>
+                                    <option value="3">Yearly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-overflow">
+                            <table class="table table-lg">
+                                <thead>
+                                    <tr>
+                                        <td class="text-dark text-semibold"><strong>文档信息</strong></td>
+                                        <td class="text-dark text-semibold"><strong>提交时间</strong></td>
+                                        <td class="text-dark text-semibold"><strong>批改意见</strong></td>
+                                        <td class="text-dark text-semibold"><strong>批改人</strong></td>
+                                        <td class="text-dark text-semibold"><strong>状态</strong></td>
+                                        <td class="text-dark text-semibold"><strong>操作</strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <{foreach $document as $v}>
+                                    <tr>
+                                        <td><{$v.Infor}></td>
+                                        <td><{$v.SubmitTime}></td>
+                                        <td><{$v.Advice}></td>
+                                        <td><{$v.AdministratorName}></td>
+                                        <td><{$v.Status}></td>
+                                        <td>
+                                            <button class="btn btn-outline-info btn-rounded" onclick=formSubmit("<{$v.TaskID}>","/admin/doc/submit");>更新</button>
+                                        </td>
+                                    </tr>
+                                    <{/foreach}>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <footer class="content-footer">
+        <div class="footer">
+            <div class="copyright" style="text-align: center;">
+                <span>Copyright © 2003-2019 V5++, All Right Reserved</span>
+            </div>
+        </div>
+    </footer>
+</div>
